@@ -42,6 +42,10 @@ class ForumMonitor:
 
     # 简化配置加载
     def load_config(self):
+        # 确保配置目录存在，避免首次运行时目录缺失
+        config_dir = os.path.dirname(self.config_path)
+        if config_dir and (not os.path.exists(config_dir)):
+            os.makedirs(config_dir, exist_ok=True)
         # 如果配置文件不存在，复制示例文件
         if not os.path.exists(self.config_path):
             shutil.copy('example.json', self.config_path)
