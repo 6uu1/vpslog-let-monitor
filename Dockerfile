@@ -4,6 +4,11 @@ FROM python:3.9-slim
 # 设置工作目录
 WORKDIR /app
 
+# 安装证书等基础依赖，避免 Atlas TLS 握手失败
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
 # 复制 requirements.txt 到容器内
 COPY requirements.txt /app/
 
